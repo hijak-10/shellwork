@@ -13,16 +13,11 @@
 				"fileName": "nation.csv",
 				"container": "teaml-6-folder"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "N_NATIONKEY\tN_NAME\tN_REGIONKEY\tN_COMMENT",
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
