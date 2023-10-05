@@ -13,16 +13,11 @@
 				"fileName": "region.csv",
 				"container": "teaml-6-folder"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": [
-			{
-				"name": "R_REGIONKEY\tR_NAME\tR_COMMENT",
-				"type": "String"
-			}
-		]
+		"schema": []
 	}
 }
