@@ -278,17 +278,12 @@
 						"fileName": "nation.csv",
 						"container": "teaml-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": [
-					{
-						"name": "N_NATIONKEY\tN_NAME\tN_REGIONKEY\tN_COMMENT",
-						"type": "String"
-					}
-				]
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
@@ -410,17 +405,12 @@
 						"fileName": "region.csv",
 						"container": "teaml-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": [
-					{
-						"name": "R_REGIONKEY\tR_NAME\tR_COMMENT",
-						"type": "String"
-					}
-				]
+				"schema": []
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
@@ -556,7 +546,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "customer_table",
+								"referenceName": "cutomer_target",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -584,25 +574,9 @@
 						"     ignoreNoFilesFound: false) ~> source1",
 						"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT))) ~> filter1",
 						"filter1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          C_CUSTKEY as integer,",
-						"          C_NAME as string,",
-						"          C_ADDRESS as string,",
-						"          C_NATIONKEY as integer,",
-						"          C_PHONE as string,",
-						"          C_ACCTBAL as double,",
-						"          C_MKTSEGMENT as string,",
-						"          C_COMMENT as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
+						"     validateSchema: true,",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
 						"          C_CUSTKEY,",
 						"          C_NAME,",
@@ -612,13 +586,14 @@
 						"          C_ACCTBAL,",
 						"          C_MKTSEGMENT,",
 						"          C_COMMENT",
-						"     )) ~> sink1"
+						"     ),",
+						"     format: 'table') ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/customer')]",
-				"[concat(variables('factoryId'), '/datasets/customer_table')]"
+				"[concat(variables('factoryId'), '/datasets/cutomer_target')]"
 			]
 		}
 	]
