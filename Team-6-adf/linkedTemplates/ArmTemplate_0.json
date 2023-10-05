@@ -194,6 +194,66 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/customer_with_nation')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "target-folder"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "C_CUSTKEY",
+						"type": "String"
+					},
+					{
+						"name": "C_NAME",
+						"type": "String"
+					},
+					{
+						"name": "C_ADDRESS",
+						"type": "String"
+					},
+					{
+						"name": "C_NATIONKEY",
+						"type": "String"
+					},
+					{
+						"name": "C_PHONE",
+						"type": "String"
+					},
+					{
+						"name": "C_ACCTBAL",
+						"type": "String"
+					},
+					{
+						"name": "C_MKTSEGMENT",
+						"type": "String"
+					},
+					{
+						"name": "C_COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/cutomer_target')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -211,8 +271,8 @@
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
-					"firstRowAsHeader": false,
-					"quoteChar": null
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
 				},
 				"schema": []
 			},
@@ -709,6 +769,94 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/customer')]",
 				"[concat(variables('factoryId'), '/datasets/cutomer_target')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "customer",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "nation",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "customer_with_nation",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          C_CUSTKEY as integer,",
+						"          C_NAME as string,",
+						"          C_ADDRESS as string,",
+						"          C_NATIONKEY as integer,",
+						"          C_PHONE as string,",
+						"          C_ACCTBAL as float,",
+						"          C_MKTSEGMENT as string,",
+						"          C_COMMENT as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source(output(",
+						"          N_NATIONKEY as integer,",
+						"          N_NAME as string,",
+						"          N_REGIONKEY as string,",
+						"          N_COMMENT as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"source1, source2 join(C_NATIONKEY == N_NATIONKEY,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          C_CUSTKEY as string,",
+						"          C_NAME as string,",
+						"          C_ADDRESS as string,",
+						"          C_NATIONKEY as string,",
+						"          C_PHONE as string,",
+						"          C_ACCTBAL as string,",
+						"          C_MKTSEGMENT as string,",
+						"          C_COMMENT as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/customer')]",
+				"[concat(variables('factoryId'), '/datasets/nation')]",
+				"[concat(variables('factoryId'), '/datasets/customer_with_nation')]"
 			]
 		},
 		{
