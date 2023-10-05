@@ -1,0 +1,28 @@
+{
+	"name": "order",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "orders.csv",
+				"container": "team-6-folder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "O_ORDERKEY\tO_CUSTKEY\tO_ORDERSTATUS\tO_TOTALPRICE\tO_ORDERDATE\tO_ORDERPRIORITY\tO_CLERK\tO_SHIPPRIORITY\tO_COMMENT",
+				"type": "String"
+			}
+		]
+	}
+}

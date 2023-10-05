@@ -1,0 +1,28 @@
+{
+	"name": "partsupp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "partsupp.csv",
+				"container": "team-6-folder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "PS_PARTKEY\tPS_SUPPKEY\tPS_AVAILQTY\tPS_SUPPLYCOST\tPS_COMMENT",
+				"type": "String"
+			}
+		]
+	}
+}

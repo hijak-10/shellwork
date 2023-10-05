@@ -1,0 +1,28 @@
+{
+	"name": "line_item",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "lineitem.csv",
+				"container": "team-6-folder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "L_ORDERKEY\tL_PARTKEY\tL_SUPPKEY\tL_LINENUMBER\tL_QUANTITY\tL_EXTENDEDPRICE\tL_DISCOUNT\tL_TAX\tL_RETURNFLAG\tL_LINESTATUS\tL_SHIPDATE\tL_COMMITDATE\tL_RECEIPTDATE\tL_SHIPINSTRUCT\tL_SHIPMODE\tL_COMMENT",
+				"type": "String"
+			}
+		]
+	}
+}

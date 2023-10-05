@@ -1,0 +1,28 @@
+{
+	"name": "customer",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "customer.csv",
+				"container": "team-6-folder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "C_CUSTKEY\tC_NAME\tC_ADDRESS\tC_NATIONKEY\tC_PHONE\tC_ACCTBAL\tC_MKTSEGMENT\tC_COMMENT",
+				"type": "String"
+			}
+		]
+	}
+}
