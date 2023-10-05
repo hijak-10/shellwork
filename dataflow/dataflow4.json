@@ -1,0 +1,115 @@
+{
+	"name": "dataflow4",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "supplier",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "nation",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText2",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1",
+					"description": " S_ACCTBAL, S_COMMENT'"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "join1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          S_SUPPKEY as string,",
+				"          S_NAME as string,",
+				"          S_ADDRESS as string,",
+				"          S_NATIONKEY as integer,",
+				"          S_PHONE as string,",
+				"          S_ACCTBAL as string,",
+				"          S_COMMENT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          N_NATIONKEY as integer,",
+				"          N_NAME as string,",
+				"          N_REGIONKEY as string,",
+				"          N_COMMENT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1 select(mapColumn(",
+				"          S_SUPPKEY,",
+				"          S_NAME,",
+				"          S_ADDRESS,",
+				"          S_NATIONKEY,",
+				"          S_PHONE,",
+				"          S_ACCTBAL,",
+				"          S_COMMENT",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source2 select(mapColumn(",
+				"          N_NATIONKEY,",
+				"          N_NAME,",
+				"          N_REGIONKEY,",
+				"          N_COMMENT",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select1, select2 join(S_NATIONKEY == N_NATIONKEY,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          C_CUSTKEY as string,",
+				"          C_NAME as string,",
+				"          C_ADDRESS as string,",
+				"          C_NATIONKEY as string,",
+				"          C_PHONE as string,",
+				"          C_ACCTBAL as string,",
+				"          C_MKTSEGMENT as string,",
+				"          C_COMMENT as string,",
+				"          O_ORDERKEY as string,",
+				"          O_CUSTKEY as string,",
+				"          O_ORDERSTATUS as string,",
+				"          O_TOTALPRICE as string,",
+				"          O_ORDERDATE as string,",
+				"          O_ORDERPRIORITY as string,",
+				"          O_CLERK as string,",
+				"          O_SHIPPRIORITY as string,",
+				"          O_COMMENT as string",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}

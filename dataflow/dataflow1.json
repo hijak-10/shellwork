@@ -21,12 +21,7 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [
-				{
-					"name": "filter1",
-					"description": "remove null"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          C_CUSTKEY as integer,",
@@ -41,8 +36,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT))) ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"source1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
 				"     input(",
 				"          C_CUSTKEY as integer,",
