@@ -13,14 +13,47 @@
 				"fileName": "part.csv",
 				"container": "team-6-folder"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
+			"rowDelimiter": "\n",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "P_PARTKEY\tP_NAME\tP_MFGR\tP_BRAND\tP_TYPE\tP_SIZE\tP_CONTAINER\tP_RETAILPRICE\tP_COMMENT",
+				"name": "P_PARTKEY",
+				"type": "String"
+			},
+			{
+				"name": "P_NAME",
+				"type": "String"
+			},
+			{
+				"name": "P_MFGR",
+				"type": "String"
+			},
+			{
+				"name": "P_BRAND",
+				"type": "String"
+			},
+			{
+				"name": "P_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "P_SIZE",
+				"type": "String"
+			},
+			{
+				"name": "P_CONTAINER",
+				"type": "String"
+			},
+			{
+				"name": "P_RETAILPRICE",
+				"type": "String"
+			},
+			{
+				"name": "P_COMMENT",
 				"type": "String"
 			}
 		]

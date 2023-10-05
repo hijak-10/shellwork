@@ -13,14 +13,31 @@
 				"fileName": "partsupp.csv",
 				"container": "team-6-folder"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
+			"rowDelimiter": "\n",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "PS_PARTKEY\tPS_SUPPKEY\tPS_AVAILQTY\tPS_SUPPLYCOST\tPS_COMMENT",
+				"name": "PS_PARTKEY",
+				"type": "String"
+			},
+			{
+				"name": "PS_SUPPKEY",
+				"type": "String"
+			},
+			{
+				"name": "PS_AVAILQTY",
+				"type": "String"
+			},
+			{
+				"name": "PS_SUPPLYCOST",
+				"type": "String"
+			},
+			{
+				"name": "PS_COMMENT",
 				"type": "String"
 			}
 		]

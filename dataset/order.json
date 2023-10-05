@@ -13,14 +13,47 @@
 				"fileName": "orders.csv",
 				"container": "team-6-folder"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
+			"rowDelimiter": "\n",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "O_ORDERKEY\tO_CUSTKEY\tO_ORDERSTATUS\tO_TOTALPRICE\tO_ORDERDATE\tO_ORDERPRIORITY\tO_CLERK\tO_SHIPPRIORITY\tO_COMMENT",
+				"name": "O_ORDERKEY",
+				"type": "String"
+			},
+			{
+				"name": "O_CUSTKEY",
+				"type": "String"
+			},
+			{
+				"name": "O_ORDERSTATUS",
+				"type": "String"
+			},
+			{
+				"name": "O_TOTALPRICE",
+				"type": "String"
+			},
+			{
+				"name": "O_ORDERDATE",
+				"type": "String"
+			},
+			{
+				"name": "O_ORDERPRIORITY",
+				"type": "String"
+			},
+			{
+				"name": "O_CLERK",
+				"type": "String"
+			},
+			{
+				"name": "O_SHIPPRIORITY",
+				"type": "String"
+			},
+			{
+				"name": "O_COMMENT",
 				"type": "String"
 			}
 		]

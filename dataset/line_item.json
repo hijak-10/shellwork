@@ -13,14 +13,75 @@
 				"fileName": "lineitem.csv",
 				"container": "team-6-folder"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
+			"rowDelimiter": "\n",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "L_ORDERKEY\tL_PARTKEY\tL_SUPPKEY\tL_LINENUMBER\tL_QUANTITY\tL_EXTENDEDPRICE\tL_DISCOUNT\tL_TAX\tL_RETURNFLAG\tL_LINESTATUS\tL_SHIPDATE\tL_COMMITDATE\tL_RECEIPTDATE\tL_SHIPINSTRUCT\tL_SHIPMODE\tL_COMMENT",
+				"name": "L_ORDERKEY",
+				"type": "String"
+			},
+			{
+				"name": "L_PARTKEY",
+				"type": "String"
+			},
+			{
+				"name": "L_SUPPKEY",
+				"type": "String"
+			},
+			{
+				"name": "L_LINENUMBER",
+				"type": "String"
+			},
+			{
+				"name": "L_QUANTITY",
+				"type": "String"
+			},
+			{
+				"name": "L_EXTENDEDPRICE",
+				"type": "String"
+			},
+			{
+				"name": "L_DISCOUNT",
+				"type": "String"
+			},
+			{
+				"name": "L_TAX",
+				"type": "String"
+			},
+			{
+				"name": "L_RETURNFLAG",
+				"type": "String"
+			},
+			{
+				"name": "L_LINESTATUS",
+				"type": "String"
+			},
+			{
+				"name": "L_SHIPDATE",
+				"type": "String"
+			},
+			{
+				"name": "L_COMMITDATE",
+				"type": "String"
+			},
+			{
+				"name": "L_RECEIPTDATE",
+				"type": "String"
+			},
+			{
+				"name": "L_SHIPINSTRUCT",
+				"type": "String"
+			},
+			{
+				"name": "L_SHIPMODE",
+				"type": "String"
+			},
+			{
+				"name": "L_COMMENT",
 				"type": "String"
 			}
 		]

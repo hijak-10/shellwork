@@ -5,6 +5,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "customer",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
@@ -25,17 +29,18 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          C_CUSTKEY as integer,",
+				"          C_CUSTKEY as string,",
 				"          C_NAME as string,",
 				"          C_ADDRESS as string,",
-				"          C_NATIONKEY as integer,",
+				"          C_NATIONKEY as string,",
 				"          C_PHONE as string,",
-				"          C_ACCTBAL as float,",
+				"          C_ACCTBAL as string,",
 				"          C_MKTSEGMENT as string,",
 				"          C_COMMENT as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
 				"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT))) ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",

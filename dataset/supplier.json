@@ -13,14 +13,39 @@
 				"fileName": "supplier.csv",
 				"container": "team-6-folder"
 			},
-			"columnDelimiter": ",",
+			"columnDelimiter": "\t",
+			"rowDelimiter": "\n",
 			"escapeChar": "\\",
 			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
-				"name": "S_SUPPKEY\tS_NAME\tS_ADDRESS\tS_NATIONKEY\tS_PHONE\tS_ACCTBAL\tS_COMMENT",
+				"name": "S_SUPPKEY",
+				"type": "String"
+			},
+			{
+				"name": "S_NAME",
+				"type": "String"
+			},
+			{
+				"name": "S_ADDRESS",
+				"type": "String"
+			},
+			{
+				"name": "S_NATIONKEY",
+				"type": "String"
+			},
+			{
+				"name": "S_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "S_ACCTBAL",
+				"type": "String"
+			},
+			{
+				"name": "S_COMMENT",
 				"type": "String"
 			}
 		]
