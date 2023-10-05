@@ -181,6 +181,63 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "C_CUSTKEY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "C_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "C_ADDRESS",
+						"type": "varchar"
+					},
+					{
+						"name": "C_NATIONKEY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "C_PHONE",
+						"type": "varchar"
+					},
+					{
+						"name": "C_ACCTBAL",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "C_MKTSEGMENT",
+						"type": "varchar"
+					},
+					{
+						"name": "C_COMMENT",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "customer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -257,6 +314,102 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "target-folder"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "C_CUSTKEY",
+						"type": "String"
+					},
+					{
+						"name": "C_NAME",
+						"type": "String"
+					},
+					{
+						"name": "C_ADDRESS",
+						"type": "String"
+					},
+					{
+						"name": "C_NATIONKEY",
+						"type": "String"
+					},
+					{
+						"name": "C_PHONE",
+						"type": "String"
+					},
+					{
+						"name": "C_ACCTBAL",
+						"type": "String"
+					},
+					{
+						"name": "C_MKTSEGMENT",
+						"type": "String"
+					},
+					{
+						"name": "C_COMMENT",
+						"type": "String"
+					},
+					{
+						"name": "O_ORDERKEY",
+						"type": "String"
+					},
+					{
+						"name": "O_CUSTKEY",
+						"type": "String"
+					},
+					{
+						"name": "O_ORDERSTATUS",
+						"type": "String"
+					},
+					{
+						"name": "O_TOTALPRICE",
+						"type": "String"
+					},
+					{
+						"name": "O_ORDERDATE",
+						"type": "String"
+					},
+					{
+						"name": "O_ORDERPRIORITY",
+						"type": "String"
+					},
+					{
+						"name": "O_CLERK",
+						"type": "String"
+					},
+					{
+						"name": "O_SHIPPRIORITY",
+						"type": "String"
+					},
+					{
+						"name": "O_COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/customer')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -316,6 +469,63 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/customer_sql')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "C_CUSTKEY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "C_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "C_ADDRESS",
+						"type": "varchar"
+					},
+					{
+						"name": "C_NATIONKEY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "C_PHONE",
+						"type": "varchar"
+					},
+					{
+						"name": "C_ACCTBAL",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "C_MKTSEGMENT",
+						"type": "varchar"
+					},
+					{
+						"name": "C_COMMENT",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "customer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
@@ -937,37 +1147,47 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "cutomer_target",
+								"referenceName": "AzureSqlTable1",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
 						}
 					],
-					"transformations": [
-						{
-							"name": "filter1",
-							"description": "remove null"
-						}
-					],
+					"transformations": [],
 					"scriptLines": [
 						"source(output(",
-						"          C_CUSTKEY as string,",
+						"          C_CUSTKEY as integer,",
 						"          C_NAME as string,",
 						"          C_ADDRESS as string,",
-						"          C_NATIONKEY as string,",
+						"          C_NATIONKEY as integer,",
 						"          C_PHONE as string,",
-						"          C_ACCTBAL as string,",
+						"          C_ACCTBAL as float,",
 						"          C_MKTSEGMENT as string,",
 						"          C_COMMENT as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT))) ~> filter1",
-						"filter1 sink(allowSchemaDrift: true,",
+						"source1 sink(allowSchemaDrift: true,",
 						"     validateSchema: true,",
+						"     input(",
+						"          C_CUSTKEY as integer,",
+						"          C_NAME as string,",
+						"          C_ADDRESS as string,",
+						"          C_NATIONKEY as integer,",
+						"          C_PHONE as string,",
+						"          C_ACCTBAL as double,",
+						"          C_MKTSEGMENT as string,",
+						"          C_COMMENT as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
 						"          C_CUSTKEY,",
 						"          C_NAME,",
@@ -977,14 +1197,13 @@
 						"          C_ACCTBAL,",
 						"          C_MKTSEGMENT,",
 						"          C_COMMENT",
-						"     ),",
-						"     format: 'table') ~> sink1"
+						"     )) ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/customer')]",
-				"[concat(variables('factoryId'), '/datasets/cutomer_target')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
 			]
 		},
 		{
@@ -1065,7 +1284,17 @@
 						"          C_COMMENT as string",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          C_CUSTKEY,",
+						"          C_NAME,",
+						"          C_ADDRESS,",
+						"          C_NATIONKEY,",
+						"          C_PHONE,",
+						"          C_ACCTBAL,",
+						"          C_MKTSEGMENT,",
+						"          C_COMMENT",
+						"     )) ~> sink1"
 					]
 				}
 			},
@@ -1162,7 +1391,18 @@
 						"          N_COMMENT as string",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true,",
+						"     mapColumn(",
+						"          C_CUSTKEY,",
+						"          C_NAME,",
+						"          C_ADDRESS,",
+						"          C_NATIONKEY,",
+						"          C_PHONE,",
+						"          C_ACCTBAL,",
+						"          C_MKTSEGMENT,",
+						"          C_COMMENT,",
+						"          N_NATIONKEY = C_NATIONKEY",
+						"     )) ~> sink1"
 					]
 				}
 			},
@@ -1170,6 +1410,128 @@
 				"[concat(variables('factoryId'), '/datasets/customer')]",
 				"[concat(variables('factoryId'), '/datasets/order')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "supplier",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "nation",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1",
+							"description": " S_ACCTBAL, S_COMMENT'"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "join1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          S_SUPPKEY as string,",
+						"          S_NAME as string,",
+						"          S_ADDRESS as string,",
+						"          S_NATIONKEY as integer,",
+						"          S_PHONE as string,",
+						"          S_ACCTBAL as string,",
+						"          S_COMMENT as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source(output(",
+						"          N_NATIONKEY as integer,",
+						"          N_NAME as string,",
+						"          N_REGIONKEY as string,",
+						"          N_COMMENT as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"source1 select(mapColumn(",
+						"          S_SUPPKEY,",
+						"          S_NAME,",
+						"          S_ADDRESS,",
+						"          S_NATIONKEY,",
+						"          S_PHONE,",
+						"          S_ACCTBAL,",
+						"          S_COMMENT",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"source2 select(mapColumn(",
+						"          N_NATIONKEY,",
+						"          N_NAME,",
+						"          N_REGIONKEY,",
+						"          N_COMMENT",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"select1, select2 join(S_NATIONKEY == N_NATIONKEY,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          C_CUSTKEY as string,",
+						"          C_NAME as string,",
+						"          C_ADDRESS as string,",
+						"          C_NATIONKEY as string,",
+						"          C_PHONE as string,",
+						"          C_ACCTBAL as string,",
+						"          C_MKTSEGMENT as string,",
+						"          C_COMMENT as string,",
+						"          O_ORDERKEY as string,",
+						"          O_CUSTKEY as string,",
+						"          O_ORDERSTATUS as string,",
+						"          O_TOTALPRICE as string,",
+						"          O_ORDERDATE as string,",
+						"          O_ORDERPRIORITY as string,",
+						"          O_CLERK as string,",
+						"          O_SHIPPRIORITY as string,",
+						"          O_COMMENT as string",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/supplier')]",
+				"[concat(variables('factoryId'), '/datasets/nation')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]"
 			]
 		}
 	]
