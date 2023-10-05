@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
 		},
+		"AzureBlobStorage3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
+		},
 		"AzureSqlDatabase1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
@@ -88,7 +92,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -97,7 +101,7 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "customer.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
 					"columnDelimiter": "\t",
 					"rowDelimiter": "\n",
@@ -141,64 +145,7 @@
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/customer_table')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSqlDatabase1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "C_CUSTKEY",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "C_NAME",
-						"type": "varchar"
-					},
-					{
-						"name": "C_ADDRESS",
-						"type": "varchar"
-					},
-					{
-						"name": "C_NATIONKEY",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "C_PHONE",
-						"type": "varchar"
-					},
-					{
-						"name": "C_ACCTBAL",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "C_MKTSEGMENT",
-						"type": "varchar"
-					},
-					{
-						"name": "C_COMMENT",
-						"type": "varchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "customer"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
@@ -219,8 +166,8 @@
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
+					"firstRowAsHeader": false,
+					"quoteChar": null
 				},
 				"schema": []
 			},
@@ -234,7 +181,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -243,22 +190,83 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "lineitem.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "L_ORDERKEY\tL_PARTKEY\tL_SUPPKEY\tL_LINENUMBER\tL_QUANTITY\tL_EXTENDEDPRICE\tL_DISCOUNT\tL_TAX\tL_RETURNFLAG\tL_LINESTATUS\tL_SHIPDATE\tL_COMMITDATE\tL_RECEIPTDATE\tL_SHIPINSTRUCT\tL_SHIPMODE\tL_COMMENT",
+						"name": "L_ORDERKEY",
+						"type": "String"
+					},
+					{
+						"name": "L_PARTKEY",
+						"type": "String"
+					},
+					{
+						"name": "L_SUPPKEY",
+						"type": "String"
+					},
+					{
+						"name": "L_LINENUMBER",
+						"type": "String"
+					},
+					{
+						"name": "L_QUANTITY",
+						"type": "String"
+					},
+					{
+						"name": "L_EXTENDEDPRICE",
+						"type": "String"
+					},
+					{
+						"name": "L_DISCOUNT",
+						"type": "String"
+					},
+					{
+						"name": "L_TAX",
+						"type": "String"
+					},
+					{
+						"name": "L_RETURNFLAG",
+						"type": "String"
+					},
+					{
+						"name": "L_LINESTATUS",
+						"type": "String"
+					},
+					{
+						"name": "L_SHIPDATE",
+						"type": "String"
+					},
+					{
+						"name": "L_COMMITDATE",
+						"type": "String"
+					},
+					{
+						"name": "L_RECEIPTDATE",
+						"type": "String"
+					},
+					{
+						"name": "L_SHIPINSTRUCT",
+						"type": "String"
+					},
+					{
+						"name": "L_SHIPMODE",
+						"type": "String"
+					},
+					{
+						"name": "L_COMMENT",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
@@ -267,7 +275,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -276,26 +284,44 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "nation.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
 					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "N_NATIONKEY",
+						"type": "String"
+					},
+					{
+						"name": "N_NAME",
+						"type": "String"
+					},
+					{
+						"name": "N_REGIONKEY",
+						"type": "String"
+					},
+					{
+						"name": "N_COMMENT",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/orders')]",
+			"name": "[concat(parameters('factoryName'), '/order')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -304,22 +330,55 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "orders.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "O_ORDERKEY\tO_CUSTKEY\tO_ORDERSTATUS\tO_TOTALPRICE\tO_ORDERDATE\tO_ORDERPRIORITY\tO_CLERK\tO_SHIPPRIORITY\tO_COMMENT",
+						"name": "O_ORDERKEY",
+						"type": "String"
+					},
+					{
+						"name": "O_CUSTKEY",
+						"type": "String"
+					},
+					{
+						"name": "O_ORDERSTATUS",
+						"type": "String"
+					},
+					{
+						"name": "O_TOTALPRICE",
+						"type": "String"
+					},
+					{
+						"name": "O_ORDERDATE",
+						"type": "String"
+					},
+					{
+						"name": "O_ORDERPRIORITY",
+						"type": "String"
+					},
+					{
+						"name": "O_CLERK",
+						"type": "String"
+					},
+					{
+						"name": "O_SHIPPRIORITY",
+						"type": "String"
+					},
+					{
+						"name": "O_COMMENT",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
@@ -328,7 +387,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -337,31 +396,64 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "part.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "P_PARTKEY\tP_NAME\tP_MFGR\tP_BRAND\tP_TYPE\tP_SIZE\tP_CONTAINER\tP_RETAILPRICE\tP_COMMENT",
+						"name": "P_PARTKEY",
+						"type": "String"
+					},
+					{
+						"name": "P_NAME",
+						"type": "String"
+					},
+					{
+						"name": "P_MFGR",
+						"type": "String"
+					},
+					{
+						"name": "P_BRAND",
+						"type": "String"
+					},
+					{
+						"name": "P_TYPE",
+						"type": "String"
+					},
+					{
+						"name": "P_SIZE",
+						"type": "String"
+					},
+					{
+						"name": "P_CONTAINER",
+						"type": "String"
+					},
+					{
+						"name": "P_RETAILPRICE",
+						"type": "String"
+					},
+					{
+						"name": "P_COMMENT",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/part_supp')]",
+			"name": "[concat(parameters('factoryName'), '/partsupp')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -370,22 +462,39 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "partsupp.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "PS_PARTKEY\tPS_SUPPKEY\tPS_AVAILQTY\tPS_SUPPLYCOST\tPS_COMMENT",
+						"name": "PS_PARTKEY",
+						"type": "String"
+					},
+					{
+						"name": "PS_SUPPKEY",
+						"type": "String"
+					},
+					{
+						"name": "PS_AVAILQTY",
+						"type": "String"
+					},
+					{
+						"name": "PS_SUPPLYCOST",
+						"type": "String"
+					},
+					{
+						"name": "PS_COMMENT",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
@@ -394,7 +503,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -403,17 +512,31 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "region.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
 					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "R_REGIONKEY",
+						"type": "String"
+					},
+					{
+						"name": "R_NAME",
+						"type": "String"
+					},
+					{
+						"name": "R_COMMENT",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
@@ -422,7 +545,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "AzureBlobStorage1",
+					"referenceName": "AzureBlobStorage3",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -431,22 +554,47 @@
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "supplier.csv",
-						"container": "teaml-6-folder"
+						"container": "team-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "S_SUPPKEY\tS_NAME\tS_ADDRESS\tS_NATIONKEY\tS_PHONE\tS_ACCTBAL\tS_COMMENT",
+						"name": "S_SUPPKEY",
+						"type": "String"
+					},
+					{
+						"name": "S_NAME",
+						"type": "String"
+					},
+					{
+						"name": "S_ADDRESS",
+						"type": "String"
+					},
+					{
+						"name": "S_NATIONKEY",
+						"type": "String"
+					},
+					{
+						"name": "S_PHONE",
+						"type": "String"
+					},
+					{
+						"name": "S_ACCTBAL",
+						"type": "String"
+					},
+					{
+						"name": "S_COMMENT",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage3')]"
 			]
 		},
 		{
@@ -484,6 +632,19 @@
 				"type": "AzureBlobStorage",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureBlobStorage2_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage3')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage3_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -560,12 +721,12 @@
 					],
 					"scriptLines": [
 						"source(output(",
-						"          C_CUSTKEY as integer,",
+						"          C_CUSTKEY as string,",
 						"          C_NAME as string,",
 						"          C_ADDRESS as string,",
-						"          C_NATIONKEY as integer,",
+						"          C_NATIONKEY as string,",
 						"          C_PHONE as string,",
-						"          C_ACCTBAL as float,",
+						"          C_ACCTBAL as string,",
 						"          C_MKTSEGMENT as string,",
 						"          C_COMMENT as string",
 						"     ),",
