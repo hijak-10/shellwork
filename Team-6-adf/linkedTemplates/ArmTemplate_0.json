@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Team-6-adf"
 		},
+		"AzureBlobStorage target_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage target'"
+		},
 		"AzureBlobStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
@@ -28,6 +32,19 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage target')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage target_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -97,20 +114,76 @@
 						"fileName": "customer.csv",
 						"container": "teaml-6-folder"
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": "\t",
+					"rowDelimiter": "\n",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "C_CUSTKEY\tC_NAME\tC_ADDRESS\tC_NATIONKEY\tC_PHONE\tC_ACCTBAL\tC_MKTSEGMENT\tC_COMMENT",
+						"name": "C_CUSTKEY",
+						"type": "String"
+					},
+					{
+						"name": "C_NAME",
+						"type": "String"
+					},
+					{
+						"name": "C_ADDRESS",
+						"type": "String"
+					},
+					{
+						"name": "C_NATIONKEY",
+						"type": "String"
+					},
+					{
+						"name": "C_PHONE",
+						"type": "String"
+					},
+					{
+						"name": "C_ACCTBAL",
+						"type": "String"
+					},
+					{
+						"name": "C_MKTSEGMENT",
+						"type": "String"
+					},
+					{
+						"name": "C_COMMENT",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/cutomer_target')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage target",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "target-folder"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage target')]"
 			]
 		},
 		{
@@ -342,6 +415,64 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "customer",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "cutomer_target",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1",
+							"description": "remove null"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          C_CUSTKEY as integer,",
+						"          C_NAME as string,",
+						"          C_ADDRESS as string,",
+						"          C_NATIONKEY as integer,",
+						"          C_PHONE as string,",
+						"          C_ACCTBAL as float,",
+						"          C_MKTSEGMENT as string,",
+						"          C_COMMENT as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT))) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/customer')]",
+				"[concat(variables('factoryId'), '/datasets/cutomer_target')]"
 			]
 		}
 	]

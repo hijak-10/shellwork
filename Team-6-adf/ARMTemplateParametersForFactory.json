@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "Team-6-adf"
 		},
+		"AzureBlobStorage target_connectionString": {
+			"value": ""
+		},
 		"AzureBlobStorage1_connectionString": {
 			"value": ""
 		},

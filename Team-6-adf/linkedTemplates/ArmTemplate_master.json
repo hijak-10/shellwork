@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "Team-6-adf"
 		},
+		"AzureBlobStorage target_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage target'"
+		},
 		"AzureBlobStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
@@ -49,6 +53,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage target_connectionString": {
+						"value": "[parameters('AzureBlobStorage target_connectionString')]"
 					},
 					"AzureBlobStorage1_connectionString": {
 						"value": "[parameters('AzureBlobStorage1_connectionString')]"
