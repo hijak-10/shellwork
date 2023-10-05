@@ -1,0 +1,71 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "target-folder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "C_CUSTKEY",
+				"type": "String"
+			},
+			{
+				"name": "C_NAME",
+				"type": "String"
+			},
+			{
+				"name": "C_ADDRESS",
+				"type": "String"
+			},
+			{
+				"name": "C_NATIONKEY",
+				"type": "String"
+			},
+			{
+				"name": "C_PHONE",
+				"type": "String"
+			},
+			{
+				"name": "C_ACCTBAL",
+				"type": "String"
+			},
+			{
+				"name": "C_MKTSEGMENT",
+				"type": "String"
+			},
+			{
+				"name": "C_COMMENT",
+				"type": "String"
+			},
+			{
+				"name": "N_NATIONKEY",
+				"type": "String"
+			},
+			{
+				"name": "N_NAME",
+				"type": "String"
+			},
+			{
+				"name": "N_REGIONKEY",
+				"type": "String"
+			},
+			{
+				"name": "N_COMMENT",
+				"type": "String"
+			}
+		]
+	}
+}
