@@ -1,0 +1,28 @@
+{
+	"name": "part",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "part.csv",
+				"container": "teaml-6-folder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "P_PARTKEY\tP_NAME\tP_MFGR\tP_BRAND\tP_TYPE\tP_SIZE\tP_CONTAINER\tP_RETAILPRICE\tP_COMMENT",
+				"type": "String"
+			}
+		]
+	}
+}
