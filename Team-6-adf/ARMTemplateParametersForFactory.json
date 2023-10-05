@@ -14,6 +14,9 @@
 		"AzureBlobStorage2_connectionString": {
 			"value": ""
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://team-6-keys.vault.azure.net/"
 		},

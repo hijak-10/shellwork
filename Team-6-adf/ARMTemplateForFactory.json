@@ -19,6 +19,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
 		},
+		"AzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1'"
+		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
 			"defaultValue": "https://team-6-keys.vault.azure.net/"
@@ -138,6 +142,63 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/customer_table')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "C_CUSTKEY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "C_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "C_ADDRESS",
+						"type": "varchar"
+					},
+					{
+						"name": "C_NATIONKEY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "C_PHONE",
+						"type": "varchar"
+					},
+					{
+						"name": "C_ACCTBAL",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "C_MKTSEGMENT",
+						"type": "varchar"
+					},
+					{
+						"name": "C_COMMENT",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "customer"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
 			]
 		},
 		{
@@ -464,6 +525,19 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -482,7 +556,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "cutomer_target",
+								"referenceName": "customer_table",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -511,14 +585,40 @@
 						"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT))) ~> filter1",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          C_CUSTKEY as integer,",
+						"          C_NAME as string,",
+						"          C_ADDRESS as string,",
+						"          C_NATIONKEY as integer,",
+						"          C_PHONE as string,",
+						"          C_ACCTBAL as double,",
+						"          C_MKTSEGMENT as string,",
+						"          C_COMMENT as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          C_CUSTKEY,",
+						"          C_NAME,",
+						"          C_ADDRESS,",
+						"          C_NATIONKEY,",
+						"          C_PHONE,",
+						"          C_ACCTBAL,",
+						"          C_MKTSEGMENT,",
+						"          C_COMMENT",
+						"     )) ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/customer')]",
-				"[concat(variables('factoryId'), '/datasets/cutomer_target')]"
+				"[concat(variables('factoryId'), '/datasets/customer_table')]"
 			]
 		}
 	]
