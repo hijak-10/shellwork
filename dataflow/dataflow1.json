@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "cutomer_target",
+						"referenceName": "AzureSqlTable1",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -29,12 +29,12 @@
 			],
 			"scriptLines": [
 				"source(output(",
-				"          C_CUSTKEY as string,",
+				"          C_CUSTKEY as integer,",
 				"          C_NAME as string,",
 				"          C_ADDRESS as string,",
-				"          C_NATIONKEY as string,",
+				"          C_NATIONKEY as integer,",
 				"          C_PHONE as string,",
-				"          C_ACCTBAL as string,",
+				"          C_ACCTBAL as float,",
 				"          C_MKTSEGMENT as string,",
 				"          C_COMMENT as string",
 				"     ),",
@@ -44,8 +44,24 @@
 				"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT))) ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: true,",
+				"     input(",
+				"          C_CUSTKEY as integer,",
+				"          C_NAME as string,",
+				"          C_ADDRESS as string,",
+				"          C_NATIONKEY as integer,",
+				"          C_PHONE as string,",
+				"          C_ACCTBAL as double,",
+				"          C_MKTSEGMENT as string,",
+				"          C_COMMENT as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          C_CUSTKEY,",
 				"          C_NAME,",
@@ -55,8 +71,7 @@
 				"          C_ACCTBAL,",
 				"          C_MKTSEGMENT,",
 				"          C_COMMENT",
-				"     ),",
-				"     format: 'table') ~> sink1"
+				"     )) ~> sink1"
 			]
 		}
 	}

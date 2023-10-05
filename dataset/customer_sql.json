@@ -1,0 +1,52 @@
+{
+	"name": "customer_sql",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "C_CUSTKEY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "C_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "C_ADDRESS",
+				"type": "varchar"
+			},
+			{
+				"name": "C_NATIONKEY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "C_PHONE",
+				"type": "varchar"
+			},
+			{
+				"name": "C_ACCTBAL",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "C_MKTSEGMENT",
+				"type": "varchar"
+			},
+			{
+				"name": "C_COMMENT",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "customer"
+		}
+	}
+}
