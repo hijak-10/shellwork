@@ -12,10 +12,19 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "cutomer_target",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
-					"name": "filter1"
+					"name": "filter1",
+					"description": "remove null"
 				}
 			],
 			"scriptLines": [
@@ -32,7 +41,11 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 filter(C_NAME!=null && C_ACCTBAL!=null && C_ADDRESS!=null && C_MKTSEGMENT!=null && C_NATIONKEY!=null && C_PHONE!=null) ~> filter1"
+				"source1 filter(C_NAME!=null && C_ACCTBAL!=null && C_ADDRESS!=null && C_MKTSEGMENT!=null && C_NATIONKEY!=null && C_PHONE!=null) ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
 			]
 		}
 	}
