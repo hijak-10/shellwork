@@ -41,7 +41,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 filter(C_NAME!=null && C_ACCTBAL!=null && C_ADDRESS!=null && C_MKTSEGMENT!=null && C_NATIONKEY!=null && C_PHONE!=null) ~> filter1",
+				"source1 filter(not(isNull(C_NAME)&&isNull(C_ADDRESS)&&isNull(C_NATIONKEY)&&isNull(C_PHONE)&&isNull(C_ACCTBAL)&&isNull(C_MKTSEGMENT)) ) ~> filter1",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",
