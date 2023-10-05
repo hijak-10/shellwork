@@ -1,0 +1,28 @@
+{
+	"name": "nation",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "nation.csv",
+				"container": "team-6-folder"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "N_NATIONKEY\tN_NAME\tN_REGIONKEY\tN_COMMENT",
+				"type": "String"
+			}
+		]
+	}
+}
